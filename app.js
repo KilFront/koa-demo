@@ -2,6 +2,8 @@ const Koa = require('koa');
 const router = require('koa-router')();
 const app = new Koa();
 const crypto = require('crypto');
+const axios = require('axios');
+var Request = require("request");
 // const _ = router();
 
 router.get('/hello', (ctx) => {
@@ -40,6 +42,26 @@ router.get('/wechat', (ctx) => {
 
 
   ctx.body = checkSignature(q);
+})
+
+router.get('/access', (ctx)=> {
+  // axios.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxb8d2f8c5e52e13ce&secret=233ad21a68a1b4757c694bec6f4a568b').then(res => {
+  //   console.log('res', res);
+  // })
+  console.log('access');
+  
+  Request(
+    {
+      url:
+        "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxb8d2f8c5e52e13ce&secret=233ad21a68a1b4757c694bec6f4a568b",
+      method: "GET",
+    },
+    function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+      }
+    }
+  );
 })
 
 app.use(router.routes());
