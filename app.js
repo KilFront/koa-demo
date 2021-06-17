@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const router = require('koa-router')();
 const app = new Koa();
+const crypto = require('crypto-js');
 // const _ = router();
 
 router.get('/hello', (ctx) => {
