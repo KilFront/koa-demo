@@ -2,12 +2,19 @@ const Koa = require('koa');
 const router = require('koa-router')();
 const app = new Koa();
 const crypto = require('crypto');
-const axios = require('axios');
 var Request = require("request");
-// const _ = router();
+var bodyParser = require('koa-body-parser');
+app.use(bodyParser());
+router.get('/hello', async (ctx) => {
+  console.log('ctx', ctx);
+  
+  // ctx.body = "router";
+})
 
-router.get('/hello', (ctx) => {
-  ctx.body = "router";
+router.post('/android', (ctx) => {
+  const rb = ctx.request.body;
+  console.log('rb', rb);
+  ctx.response.body = 'success';
 })
 
 router.get('/wechat', (ctx) => {
@@ -45,11 +52,6 @@ router.get('/wechat', (ctx) => {
 })
 
 router.get('/access', (ctx)=> {
-  // axios.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxb8d2f8c5e52e13ce&secret=233ad21a68a1b4757c694bec6f4a568b').then(res => {
-  //   console.log('res', res);
-  // })
-  console.log('access');
-  
   Request(
     {
       url:
@@ -65,10 +67,7 @@ router.get('/access', (ctx)=> {
 })
 
 app.use(router.routes());
-
-// response
-// app.use(ctx => {
-//   ctx.body = 'Hello Koa';
-// });
+app.use(router.allowedMethods())
 
 app.listen(3000);
+console.log("app",app)
