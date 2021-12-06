@@ -67,7 +67,6 @@ router.get('/access', (ctx)=> {
 })
 
 app.use(router.routes());
-app.use(router.allowedMethods())
+// app.use(router.allowedMethods())
 
 app.listen(3000);
-console.log("app",app)
